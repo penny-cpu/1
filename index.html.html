@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>傩面具五官组合 AR</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.8.0/aframe-ar.min.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      background: rgba(255,255,255,0.8);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .controls button {
+      margin: 4px;
+      padding: 6px 12px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <div><b>眼睛：</b><button onclick="setPart('eye', 1)">1</button><button onclick="setPart('eye', 2)">2</button></div>
+    <div><b>鼻子：</b><button onclick="setPart('nose', 1)">1</button><button onclick="setPart('nose', 2)">2</button></div>
+    <div><b>嘴巴：</b><button onclick="setPart('mouth', 1)">1</button><button onclick="setPart('mouth', 2)">2</button></div>
+  </div>
+
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-assets>
+      <img id="eye1" src="processed_parts/21眼.png">
+<img id="eye2" src="processed_parts/30眼.png">
+      <img id="nose1" src="processed_parts/21鼻.png">
+<img id="nose2" src="processed_parts/30鼻.png">
+      <img id="mouth1" src="processed_parts/21嘴.png">
+<img id="mouth2" src="processed_parts/30嘴.png">
+    </a-assets>
+
+    <a-entity camera></a-entity>
+
+    <a-entity id="eyeEntity" geometry="primitive: plane; height: 0.3; width: 0.6"
+              material="src: #eye1" position="0 0.2 -1"></a-entity>
+    <a-entity id="noseEntity" geometry="primitive: plane; height: 0.25; width: 0.25"
+              material="src: #nose1" position="0 0 -1"></a-entity>
+    <a-entity id="mouthEntity" geometry="primitive: plane; height: 0.2; width: 0.4"
+              material="src: #mouth1" position="0 -0.25 -1"></a-entity>
+  </a-scene>
+
+  <script>
+    function setPart(part, index) {
+      const el = document.getElementById(part + 'Entity');
+      el.setAttribute('material', 'src', '#' + part + index);
+    }
+  </script>
+</body>
+</html>
